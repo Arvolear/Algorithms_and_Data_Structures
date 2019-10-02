@@ -197,7 +197,6 @@ vector < long long > LS::normalmul(vector < long long > &v, vector < long long >
 { 
     vector < long long > res;
 
-
     int len = v.size();
     res.resize(2 * len);
 
@@ -208,11 +207,9 @@ vector < long long > LS::normalmul(vector < long long > &v, vector < long long >
             res[i + j] += v[i] * w[j];
         }
     }
-    
 
     return res;
 }
-
 
 vector < long long > LS::karatsubamul(vector < long long > &v, vector < long long > &w)
 {

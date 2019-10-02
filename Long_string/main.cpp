@@ -1,41 +1,64 @@
 #include "longstring.h"
 #include <fstream>
+#include <ctime>
 
 using namespace std;
 
+string gen()
+{
+    string s = "";
+
+    int length = 1 + rand() % 50;
+
+    for (int i = 0; i < length; i++)
+    {
+        int a = rand() % 10;
+
+        if (i == 0 && a == 0)
+            a++;
+
+        s += char(a + 48);
+    }
+
+    return s;
+}
+
 int main()
 {
-    //ifstream cin("./file");
+    srand(time(NULL));
 
     int n;
     cin >> n;
 
     LS ls(n);
     
-    string s;
-    string s1;
+    for (int i = 0; i < 100; i++)
+    {
+        ofstream input("./tests/" + to_string(i) + ".in");
 
-    cin >> s >> s1;
-    
-    vector < long long > o;
-    vector < long long > p;
+        string s = gen();
+        string s1 = gen();
 
-    o = ls.makenum(s);
-    p = ls.makenum(s1);
-    
-    /*vector < long long > ll = ls.sum(o, p);
+        vector < long long > o;
+        vector < long long > p;
 
-    cout << ls.makestr(ll) << endl << endl;*/
+        o = ls.makenum(s);
+        p = ls.makenum(s1);
 
-    cout << endl << endl;
+        if (ls.lt(o, p))
+        {
+            swap(p, o);
+        }
 
-    cout << ls.makestr(ls.sum(o, p)) << endl << endl;
+        input << s << endl << s1; 
+        
+        ofstream output("./tests/" + to_string(i) + ".out");
 
-    cout << ls.makestr(ls.sub(o, p)) << endl << endl;
-
-    cout << ls.makestr(ls.mul(o, p)) << endl << endl;
-
-    cout << ls.makestr(ls.div(o, p)) << endl;
+        output << ls.makestr(ls.sum(o, p)) << endl;
+        output << ls.makestr(ls.sub(o, p)) << endl;
+        output << ls.makestr(ls.mul(o, p)) << endl;
+        output << ls.makestr(ls.div(o, p));
+    }
 
     return 0;
 }
