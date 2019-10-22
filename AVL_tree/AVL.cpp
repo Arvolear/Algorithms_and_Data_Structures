@@ -88,7 +88,7 @@ shared_ptr < Node > AVL::fixBalance(shared_ptr < Node > base)
     fixHeight(base);
 
     /* need to perform left turn around base */
-    if (getBalanceFactor(base) == 2) // right is greater than left
+    if (getBalanceFactor(base) > 1) // right is greater than left
     {
         if (getBalanceFactor(base->right) < 0) // left is grater than right
         {
@@ -98,7 +98,7 @@ shared_ptr < Node > AVL::fixBalance(shared_ptr < Node > base)
         return rotateLeft(base);
     }
     /* right turn instead */
-    else if (getBalanceFactor(base) == -2)
+    else if (getBalanceFactor(base) < -1)
     {
         if (getBalanceFactor(base->left) > 0) // right is grater than left
         {
@@ -148,6 +148,27 @@ shared_ptr < Node > AVL::insert(shared_ptr < Node > node, int k)
 
     return fixBalance(node);
 }
+        
+shared_ptr < Node > AVL::find(shared_ptr < Node > node, int k)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (k > node->key)
+    {
+        return find(node->right, k);
+    }
+    else if (k == node->key)
+    {
+        return node;
+    }
+    else
+    {
+        return find(node->left, k);
+    }
+}
 
 shared_ptr < Node > AVL::findMin(shared_ptr < Node > node)
 {
@@ -164,18 +185,6 @@ shared_ptr < Node > AVL::removeMin(shared_ptr < Node > node)
     node->left = removeMin(node->left); 
 
     return fixBalance(node); // other nodes still point to left ones
-}
-
-void AVL::removeMinimum(shared_ptr < Node > node)
-{
-    shared_ptr < Node > min = findMin(node);
-
-    if (min == nullptr)
-    {
-        return;
-    }
-
-    remove(node, min->key);
 }
 
 shared_ptr < Node > AVL::remove(shared_ptr < Node > node, int k)

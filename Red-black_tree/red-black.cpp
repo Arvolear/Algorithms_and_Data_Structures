@@ -177,29 +177,38 @@ void RedBlack<Key, Val>::repair3(Node* node)
     Node* parent = getParent(node);
     Node* grandParent = getGrandParent(node);
 
-    if (parent == grandParent->left)
+    /* rotating around the parent to make new node be outside 
+     * left->right --> left->left
+     * right->left --> right->right
+     * */
+    if (parent == grandParent->left && node == parent->right)
     {
-        if (node == parent->right)
-        {
-            rotateLeft(parent);
-            node = node->left;
-        }
-
-        rotateRight(getGrandParent(node));
+        rotateLeft(parent);
+        node = node->left;
     }
-    else if (parent == grandParent->right)
+    else if (parent == grandParent->right && node == parent->left)
     {
-        if (node == parent->left)
-        {
-            rotateRight(parent);
-            node = node->right;
-        }
-
-        rotateLeft(getGrandParent(node));
+        rotateRight(parent);
+        node = node->right;
     }
 
-    getParent(node)->color = BLACK;
-    getGrandParent(node)->color = RED;
+    parent = getParent(node);
+    grandParent = getGrandParent(node);
+    
+    /* rightmost child */
+    if (node == parent->right)
+    {
+        rotateLeft(grandParent);
+    }
+    /* leftmost child */
+    else
+    {
+        rotateRight(grandParent);
+    }
+    
+    /* change colors */
+    parent->color = BLACK;
+    grandParent->color = RED;
 }
 
 template < typename Key, typename Val >
@@ -225,7 +234,7 @@ void RedBlack<Key, Val>::remove(const Key& key)
 }
         
 template < typename Key, typename Val >
-typename RedBlack<Key, Val>::Node* RedBlack<Key, Val>::findRecursive(Node* root, const Key& key)
+typename RedBlack<Key, Val>::Node* RedBlack<Key, Val>::findRecursive(Node* root, const Key& key) const
 {
     if (!root)
     {

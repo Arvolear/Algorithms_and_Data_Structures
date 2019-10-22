@@ -64,7 +64,7 @@ class RedBlack
         void repair2(Node* node);
         void repair3(Node* node);
         
-        Node* findRecursive(Node* root, const Key& key);
+        Node* findRecursive(Node* root, const Key& key) const;
 
         void clearRecursive(Node* root);
 

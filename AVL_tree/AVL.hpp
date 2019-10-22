@@ -40,7 +40,7 @@ class AVL
         AVL();
 
         shared_ptr < Node > insert(shared_ptr < Node > node, int k);
-        void removeMinimum(shared_ptr < Node > node);
+        shared_ptr < Node > find(shared_ptr < Node > node, int k);
         shared_ptr < Node > remove(shared_ptr < Node > node, int k);
         
         void print(shared_ptr < Node > node);
