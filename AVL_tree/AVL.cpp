@@ -6,22 +6,22 @@ AVL::AVL()
     size = 0;
 }
 
-int AVL::getHeight(shared_ptr < Node > node)
+int AVL::getHeight(shared_ptr < Node >& node)
 {
     return node ? node->height : 0;
 }
 
-int AVL::getBalanceFactor(shared_ptr < Node > node)
+int AVL::getBalanceFactor(shared_ptr < Node >& node)
 {
     return getHeight(node->right) - getHeight(node->left);
 }
 
-void AVL::fixHeight(shared_ptr < Node > node)
+void AVL::fixHeight(shared_ptr < Node >& node)
 {
     node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
 }
 
-shared_ptr < Node > AVL::rotateLeft(shared_ptr < Node > base)
+shared_ptr < Node > AVL::rotateLeft(shared_ptr < Node >& base)
 {
     shared_ptr < Node > goesUp = base->right;
     shared_ptr < Node > goesToBase = goesUp->left;
@@ -52,7 +52,7 @@ shared_ptr < Node > AVL::rotateLeft(shared_ptr < Node > base)
     return goesUp;
 }
 
-shared_ptr < Node > AVL::rotateRight(shared_ptr < Node > base)
+shared_ptr < Node > AVL::rotateRight(shared_ptr < Node >& base)
 {
     shared_ptr < Node > goesUp = base->left;
     shared_ptr < Node > goesToBase = goesUp->right;
@@ -83,7 +83,7 @@ shared_ptr < Node > AVL::rotateRight(shared_ptr < Node > base)
     return goesUp;
 }
 
-shared_ptr < Node > AVL::fixBalance(shared_ptr < Node > base)
+shared_ptr < Node > AVL::fixBalance(shared_ptr < Node >& base)
 {
     fixHeight(base);
 
@@ -111,7 +111,7 @@ shared_ptr < Node > AVL::fixBalance(shared_ptr < Node > base)
     return base;
 }
 
-shared_ptr < Node > AVL::insert(shared_ptr < Node > node, int k)
+shared_ptr < Node > AVL::insert(shared_ptr < Node >& node, int k)
 {
     if (root == nullptr)
     {
@@ -149,7 +149,7 @@ shared_ptr < Node > AVL::insert(shared_ptr < Node > node, int k)
     return fixBalance(node);
 }
         
-shared_ptr < Node > AVL::find(shared_ptr < Node > node, int k)
+shared_ptr < Node > AVL::find(shared_ptr < Node >& node, int k)
 {
     if (node == nullptr)
     {
@@ -170,12 +170,12 @@ shared_ptr < Node > AVL::find(shared_ptr < Node > node, int k)
     }
 }
 
-shared_ptr < Node > AVL::findMin(shared_ptr < Node > node)
+shared_ptr < Node > AVL::findMin(shared_ptr < Node >& node)
 {
     return node->left ? findMin(node->left) : node;
 }
 
-shared_ptr < Node > AVL::removeMin(shared_ptr < Node > node)
+shared_ptr < Node > AVL::removeMin(shared_ptr < Node >& node)
 {
     if (node->left == nullptr) // if left node is absent 
     {
@@ -187,7 +187,7 @@ shared_ptr < Node > AVL::removeMin(shared_ptr < Node > node)
     return fixBalance(node); // other nodes still point to left ones
 }
 
-shared_ptr < Node > AVL::remove(shared_ptr < Node > node, int k)
+shared_ptr < Node > AVL::remove(shared_ptr < Node >& node, int k)
 {
     if (node == nullptr)
     {
@@ -245,8 +245,8 @@ shared_ptr < Node > AVL::remove(shared_ptr < Node > node, int k)
 
     return fixBalance(node); // other nodes are left untouched
 }
-
-void AVL::print(shared_ptr < Node > node)
+        
+void AVL::print(shared_ptr < Node >& node)
 {
     if (node == nullptr)
     {

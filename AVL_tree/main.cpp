@@ -9,7 +9,8 @@ void printAVL(AVL& tree)
 {
     cout << "{\n";
 
-    tree.print(tree.getRoot());
+    auto root = tree.getRoot();
+    tree.print(root);
 
     if (tree.getRoot() != nullptr)
     {
@@ -31,7 +32,8 @@ int main()
     
     for (int i = 0; i < 1000000; i++)
     {
-        tree.insert(tree.getRoot(), i);
+        auto root = tree.getRoot();
+        tree.insert(root, i);
     }
     
     auto now = chrono::system_clock::now();
@@ -42,7 +44,8 @@ int main()
     
     for (int i = 0; i < 1000000; i++)
     {
-        tree.find(tree.getRoot(), i);
+        auto root = tree.getRoot();
+        tree.find(root, i);
     }
     
     now = chrono::system_clock::now();
